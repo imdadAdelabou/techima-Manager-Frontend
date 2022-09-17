@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center mt-12">
-    <div>
+    <div class="gif">
       <img :src="loginIcon" alt="SignUpIcon" class="resizeGif" />
     </div>
     <div class="card mt-6">
@@ -74,5 +74,15 @@ export default defineComponent({
 
 .resizeGif {
   height: 500px;
+}
+
+@media screen and (max-width: 480px) {
+  .gif {
+    display: none;
+  }
+
+  .card {
+    width: 80%;
+  }
 }
 </style>

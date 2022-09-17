@@ -1,9 +1,9 @@
 <template>
   <div
-    class="w-full p-6 shadow flex justify-between sticky top-0 bg-white z-50 h-[108px]"
+    class="w-full p-6 shadow flex justify-between sticky top-0 bg-white z-50 p__mobile"
   >
     <img src="../assets/logo.png" class="resizeHeight" />
-    <div class="flex" v-if="!user.isLogin">
+    <div class="flex hidden__btn" v-if="!user.isLogin">
       <CustomButton
         :btn="btnLogin"
         :is-active="false"
@@ -61,5 +61,23 @@ export default defineComponent({
   box-shadow: -1px 2px 6px 4px rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: -1px 2px 6px 4px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: -1px 2px 6px 4px rgba(0, 0, 0, 0.15);
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    background-color: red;
+  }
+
+  .hidden__btn {
+    display: none;
+  }
+
+  .resizeHeight {
+    height: 45px;
+  }
+
+  .p__mobile {
+    padding: 20px;
+  }
 }
 </style>
