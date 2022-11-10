@@ -6,7 +6,9 @@
       :class="[
         isActive ? 'bg-primary white' : 'border border-[#8F381A]',
         customHeight,
+        disabled ? 'gray' : '',
       ]"
+      :disabled="disabled"
     >
       <div v-if="isLoading" class="flex justify-center items-center">
         <CircularLoader width="2em" />
@@ -43,6 +45,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup() {
     return {};
@@ -53,5 +59,9 @@ export default defineComponent({
 <style scoped>
 .white {
   color: white;
+}
+
+.gray {
+  background-color: gray;
 }
 </style>

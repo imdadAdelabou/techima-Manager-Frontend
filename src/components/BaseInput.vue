@@ -11,7 +11,7 @@
         :class="[hasSlot ? 'pl-14' : 'pl-4']"
         :readonly="readonly"
         :value="content"
-        @change="onChange"
+        @input="handleInput"
       />
     </div>
   </div>
@@ -74,7 +74,12 @@ export default defineComponent({
       console.log(state.inputValue, "====>>>");
     }
 
-    return { state, onChange };
+    function handleInput(event: any) {
+      console.log(event.target.value);
+      emit("getInputValue", event.target.value);
+    }
+
+    return { state, onChange, handleInput };
   },
 });
 </script>
