@@ -31,8 +31,15 @@ export interface StatItem {
   bgColor: string;
 }
 
+export interface LoginRecord {
+  email: string;
+  password: string;
+}
+
 export const beforeEnteCheckIfIsConnected = (to: any, from: any, next: any) => {
-  let isConnected = false;
+  // A user is connected when there a user token on a localStorage
+  let userToken: string = localStorage.getItem("userToken")!;
+  let isConnected = userToken != null && userToken != "";
 
   if (isConnected) {
     next();
