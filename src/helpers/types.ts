@@ -38,7 +38,7 @@ export interface LoginRecord {
 
 export const beforeEnteCheckIfIsConnected = (to: any, from: any, next: any) => {
   // A user is connected when there a user token on a localStorage
-  let userToken: string = localStorage.getItem("userToken")!;
+  let userToken: string = localStorage.getItem("userToken") as string;
   let isConnected = userToken != null && userToken != "";
 
   if (isConnected) {
@@ -46,4 +46,12 @@ export const beforeEnteCheckIfIsConnected = (to: any, from: any, next: any) => {
   } else {
     next({ name: "Login" });
   }
+};
+
+export const beforeLogin = (to: any, from: any, next: any) => {
+  let userToken: string = localStorage.getItem("userToken") as string;
+
+  userToken != null && userToken != ""
+    ? next({ name: "DashboardView" })
+    : next();
 };

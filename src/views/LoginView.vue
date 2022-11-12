@@ -73,7 +73,6 @@ import EmailIcon from "../components/svgs/EmailIcon.vue";
 import LockPasswordIcon from "../components/svgs/LockPasswordIcon.vue";
 import { messages } from "../helpers/constants";
 import { useUserStore } from "../stores/user";
-import { useQuasar } from "quasar";
 import { createToast } from "mosha-vue-toastify";
 // import the styling for the toast
 import "mosha-vue-toastify/dist/style.css";
@@ -83,7 +82,7 @@ export default defineComponent({
   components: { BaseInput, CustomButton, EmailIcon, LockPasswordIcon },
   setup() {
     const userStore = useUserStore();
-    const $q = useQuasar();
+
 
     const state = reactive({
       email: "",

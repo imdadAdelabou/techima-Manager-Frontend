@@ -5,6 +5,7 @@ import { LoginRecord, User } from "../helpers/types";
 import { createToast, ToastOptions } from "mosha-vue-toastify";
 // import the styling for the toast
 import "mosha-vue-toastify/dist/style.css";
+import router from "../router";
 
 export const dangerToastStyle: ToastOptions | undefined = {
   type: "danger",
@@ -30,13 +31,20 @@ export const useUserStore = defineStore("user", {
     async login(body: LoginRecord) {
       try {
         let result = await axios.post(BASE_API_URL + "/auth/login", body);
-        console.log(result, "result");
+        if (result.status == 200 || result.status == 201) {
+          console.log(result.data);
+          localStorage.setItem("userToken", result.data["token"]);
+          router.push("/dashboard");
+        }
       } catch (e: any) {
         if (
           e.response.status == 400 &&
           e.response.data.errors != null &&
           e.response.data.errors[0].property === "password"
         ) {
+          createToast(messages.incorrectPassword, dangerToastStyle);
+        }
+        if (e.response.status == 401) {
           createToast(messages.incorrectPassword, dangerToastStyle);
         }
         if (e.response.status == 404) {
@@ -46,5 +54,18 @@ export const useUserStore = defineStore("user", {
     },
 
     updateLoginState() {},
+
+    async getDataOfUserConnected() {
+      try {
+        let userToken: string = localStorage.getItem("userToken") as string;
+        let result = await axios.get("/me", {
+          headers: { "x-access-token": userToken },
+        });
+        console.log(result);
+      } catch (e) {
+        console.log(e);
+        return false;
+      }
+    },
   },
 });

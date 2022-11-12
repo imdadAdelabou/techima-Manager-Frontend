@@ -3,10 +3,15 @@ import LoginViewVue from "../views/LoginView.vue";
 import SignUpView from "../views/SignUpView.vue";
 import CodeVerification from "../views/CodeVerification.vue";
 import DashboardView from "../views/dashboard/dashboard.vue";
-import { beforeEnteCheckIfIsConnected } from "../helpers/types";
+import { beforeEnteCheckIfIsConnected, beforeLogin } from "../helpers/types";
 
 const routes = [
-  { path: "/", name: "Login", component: LoginViewVue },
+  {
+    path: "/",
+    name: "Login",
+    beforeEnter: beforeLogin,
+    component: LoginViewVue,
+  },
   { path: "/sign-up", name: "SignUp", component: SignUpView },
   {
     path: "/verification-email",
