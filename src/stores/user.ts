@@ -19,6 +19,7 @@ export const useUserStore = defineStore("user", {
       lastName: "",
       role: "",
       isLogin: false,
+      userToken: "",
     },
   }),
   getters: {
@@ -34,6 +35,14 @@ export const useUserStore = defineStore("user", {
         if (result.status == 200 || result.status == 201) {
           console.log(result.data);
           localStorage.setItem("userToken", result.data["token"]);
+
+          let resultData = await this.getDataOfUserConnected();
+          if (resultData == false) {
+            createToast(messages.errorOccurs, dangerToastStyle);
+            return;
+          }
+          this.user = resultData as User;
+          console.log(this.user);
           router.push("/dashboard");
         }
       } catch (e: any) {
@@ -55,13 +64,25 @@ export const useUserStore = defineStore("user", {
 
     updateLoginState() {},
 
-    async getDataOfUserConnected() {
+    updateUserState(user: User) {
+      this.user = user;
+    },
+
+    async getDataOfUserConnected(): Promise<Boolean | User> {
       try {
         let userToken: string = localStorage.getItem("userToken") as string;
-        let result = await axios.get("/me", {
-          headers: { "x-access-token": userToken },
-        });
-        console.log(result);
+        let result = await axios.get(BASE_API_URL + `/me?token=${userToken}`);
+        let data = result.data.data.user;
+
+        return {
+          id: data["id"],
+          isActive: data["isActive"],
+          userToken: userToken,
+          firstName: data["firstName"],
+          lastName: data["lastName"],
+          isLogin: userToken != null && userToken != "",
+          role: data["role"],
+        };
       } catch (e) {
         console.log(e);
         return false;

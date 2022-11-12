@@ -18,10 +18,13 @@ export interface Visitor {
 }
 
 export interface User {
+  id: string;
+  isActive: boolean;
   firstName: string;
   lastName: string;
   role: string;
   isLogin: boolean;
+  userToken: string;
 }
 
 export interface StatItem {
