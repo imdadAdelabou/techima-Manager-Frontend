@@ -14,7 +14,10 @@ export const useVisitorStore = defineStore("visitor", {
 
       try {
         console.log(BASE_API_URL + "/visitor/visitors");
-        const result = await axios.get(BASE_API_URL + "/visitor/visitors");
+        const token = localStorage.getItem("userToken");
+        const result = await axios.get(
+          BASE_API_URL + "/visitor/visitors?token=" + token
+        );
         result.data.data.map((visitor: any) =>
           visitors.push({
             firstName: visitor.firstName,

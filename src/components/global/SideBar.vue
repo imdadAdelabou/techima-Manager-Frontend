@@ -15,6 +15,7 @@
 import { defineComponent } from "vue";
 import DashboardIcon from "../svgs/DashboardIcon.vue";
 import SettingIcon from "../svgs/SettingIcon.vue";
+import LogOutVue from "../svgs/LogOut.vue";
 
 export interface MenuItem {
   label: string;
@@ -28,6 +29,7 @@ export default defineComponent({
     const menus: MenuItem[] = [
       { label: "Tableau de bord", icon: DashboardIcon },
       { label: "Paramèttres", icon: SettingIcon },
+      { label: "Déconnexion", icon: LogOutVue },
     ];
 
     return { menus };

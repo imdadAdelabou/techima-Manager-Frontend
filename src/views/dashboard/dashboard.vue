@@ -25,7 +25,7 @@
       </div>
 
       <div class="flex justify-center items-center w-full">
-        <div>
+        <div v-if="state.visitors.length > 0">
           <VisitorCard
             :is-start-journey="state.jouneyIsStart"
             v-for="(visitor, index) in state.visitors"
@@ -34,6 +34,7 @@
             @click-on-add-presence="clickOnAddPresence(visitor)"
           ></VisitorCard>
         </div>
+        <EmptyBoard v-else />
       </div>
 
       <Modal
@@ -118,6 +119,7 @@ import UserIcon from "../../components/svgs/UserIcon.vue";
 import CheckIcon from "../../components/svgs/CheckIcon.vue";
 import StatsCard from "../../components/StatsCard.vue";
 import Spinner from "../../components/global/Spinner.vue";
+import EmptyBoard from "../../components/global/EmptyBoard.vue";
 import { useVisitorStore } from "../../stores/visitor";
 
 export default defineComponent({
@@ -133,6 +135,7 @@ export default defineComponent({
     CheckIcon,
     StatsCard,
     Spinner,
+    EmptyBoard,
   },
   setup() {
     const user = useUserStore().getUser;
@@ -189,12 +192,12 @@ export default defineComponent({
     };
 
     const btnStartJourney: ContentBtn = {
-      label: "Démarrer la journée",
+      label: "Démarrer la présence",
       onClick: () => startJourney(),
     };
 
     const btnEndJourney: ContentBtn = {
-      label: "Terminer la journée",
+      label: "Terminer la présence",
       onClick: () => console.log("Terminer la journée"),
     };
 
