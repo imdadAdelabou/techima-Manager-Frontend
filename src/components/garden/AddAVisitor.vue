@@ -80,7 +80,7 @@ export default defineComponent({
     async function onSubmit() {
       state.submitIsLoading = true;
 
-      await visitorStore.addVisitor({
+      const result: boolean = await visitorStore.addVisitor({
         firstName: state.firstName,
         lastName: state.lastName,
         phoneNumber: state.phoneNumber,
@@ -89,7 +89,9 @@ export default defineComponent({
         createdDate: "",
       });
       state.submitIsLoading = false;
-      emit("clickOnSubmit", true);
+      if (result) {
+        emit("clickOnSubmit", true);
+      }
       console.log(state.firstName);
     }
 

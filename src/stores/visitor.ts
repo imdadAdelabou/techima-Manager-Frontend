@@ -1,8 +1,10 @@
 import { defineStore } from "pinia";
 import { inject } from "vue";
-import { BASE_API_URL } from "../helpers/constants";
+import { BASE_API_URL, messages } from "../helpers/constants";
 import axios from "axios";
 import { Visitor } from "../helpers/types";
+import { dangerToastStyle, useUserStore } from "./user";
+import { createToast } from "mosha-vue-toastify";
 
 export const useVisitorStore = defineStore("visitor", {
   state: () => ({}),
@@ -37,15 +39,23 @@ export const useVisitorStore = defineStore("visitor", {
       }
     },
 
-    async addVisitor(data: Visitor) {
+    async addVisitor(data: Visitor): Promise<boolean> {
       try {
+        const token = useUserStore().getUser.userToken;
         const result = await axios.post(
-          BASE_API_URL + "/visitor/create-visitor",
+          BASE_API_URL + "/visitor/create-visitor?token=" + token,
           data
         );
-        console.log(result);
-      } catch (e) {
-        console.log(e);
+        return true;
+      } catch (e: any) {
+        if (e.response.status == 403) {
+          createToast(messages.requiredAuthorisation, dangerToastStyle);
+        }
+        if (e.response.status == 500) {
+          createToast(messages.errorOccurs, dangerToastStyle);
+        }
+
+        return false;
       }
     },
   },

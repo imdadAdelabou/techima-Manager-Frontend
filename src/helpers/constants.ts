@@ -15,9 +15,11 @@ export const messages = {
   incorrectPassword: "Mot de passe incorrect",
   inexistantUser: "Utilisateur inexistant",
   errorOccurs: "Une erreur c'est produite",
+  requiredAuthorisation: "Authorization requise",
+  serverError: "Une erreur est subvenue",
 };
 
-export const BASE_API_URL = "http://localhost:3000/api";
+export const BASE_API_URL = "https://techima-manager.fly.dev/api";
 // import.meta.env.VUE_APP_MODE == "DEV"
 // ? "http://localhost:3000/api"
 // : "https://techima-manager.fly.dev/api";
