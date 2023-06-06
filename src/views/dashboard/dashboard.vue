@@ -120,6 +120,7 @@ import CheckIcon from "../../components/svgs/CheckIcon.vue";
 import StatsCard from "../../components/StatsCard.vue";
 import Spinner from "../../components/global/Spinner.vue";
 import EmptyBoard from "../../components/global/EmptyBoard.vue";
+import { required, email, minLength } from "@vuelidate/validators";
 import { useVisitorStore } from "../../stores/visitor";
 
 export default defineComponent({
@@ -172,6 +173,28 @@ export default defineComponent({
       email: "imdadadelabou@gmail.com",
       status: "Étudiant",
     };
+
+    function validations() {
+      return {
+        form: {
+          firstName: {
+            required,
+          },
+          lastName: {
+            required,
+          },
+          phoneNumber: {
+            required,
+          },
+          email: {
+            required,
+          },
+          status: {
+            required,
+          },
+        },
+      };
+    }
 
     function updateModalState() {
       state.isModalOpen = !state.isModalOpen;

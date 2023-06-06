@@ -3,13 +3,13 @@
     <BaseInput
       placeHolder="Nom"
       class="w-full"
-      @getInputValue="(value) => (state.firstName = value)"
+      @getInputValue="getFirstNameValue"
     >
     </BaseInput>
     <BaseInput
       placeHolder="Prénom"
       class="w-full ml-4"
-      @getInputValue="(value) => (state.lastName = value)"
+      @getInputValue="getLastNameValue"
     >
     </BaseInput>
   </div>
@@ -17,19 +17,19 @@
     place-holder="Numéro de téléphone"
     class="mt-4"
     inputType="number"
-    @getInputValue="(value) => (state.phoneNumber = value)"
+    @getInputValue="getPhoneNumber"
   >
   </BaseInput>
   <BaseInput
     place-holder="Email"
     class="mt-4"
     inputType="email"
-    @getInputValue="(value) => (state.email = value)"
+    @getInputValue="getEmail"
   ></BaseInput>
   <BaseInput
     place-holder="Observation"
     class="mt-4"
-    @getInputValue="(value) => (state.observation = value)"
+    @getInputValue="getObservation"
   ></BaseInput>
   <div class="mt-6 flex">
     <CustomButton
@@ -57,15 +57,17 @@ export default defineComponent({
   components: { BaseInput, CustomButton },
   emits: ["cancel", "clickOnSubmit"],
   setup(props, { emit }) {
-    const visitorStore = useVisitorStore();
     const state = reactive({
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      email: "",
-      observation: "",
+      form: {
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        email: "",
+        observation: "",
+      },
       submitIsLoading: false,
     });
+    const visitorStore = useVisitorStore();
 
     const btnAdd: ContentBtn = {
       label: "Ajouter",
@@ -78,24 +80,53 @@ export default defineComponent({
     };
 
     async function onSubmit() {
-      state.submitIsLoading = true;
-
-      const result: boolean = await visitorStore.addVisitor({
-        firstName: state.firstName,
-        lastName: state.lastName,
-        phoneNumber: state.phoneNumber,
-        email: state.email,
-        status: state.observation,
-        createdDate: "",
-      });
-      state.submitIsLoading = false;
-      if (result) {
-        emit("clickOnSubmit", true);
-      }
-      console.log(state.firstName);
+      // state.submitIsLoading = true;
+      // const result: boolean = await visitorStore.addVisitor({
+      //   firstName: state.firstName,
+      //   lastName: state.lastName,
+      //   phoneNumber: state.phoneNumber,
+      //   email: state.email,
+      //   status: state.observation,
+      //   createdDate: "",
+      // });
+      // state.submitIsLoading = false;
+      // if (result) {
+      //   emit("clickOnSubmit", true);
+      // }
+      // console.log(state.firstName);
     }
 
-    return { btnAdd, btnCancel, state, onSubmit };
+    function getFirstNameValue(value: string) {
+      state.form.firstName = value;
+    }
+
+    function getLastNameValue(value: string) {
+      state.form.lastName = value;
+    }
+
+    function getPhoneNumber(value: string) {
+      state.form.phoneNumber = value;
+    }
+
+    function getEmail(value: string) {
+      state.form.email = value;
+    }
+
+    function getObservation(value: string) {
+      state.form.observation = value;
+    }
+
+    return {
+      btnAdd,
+      btnCancel,
+      state,
+      onSubmit,
+      getFirstNameValue,
+      getLastNameValue,
+      getPhoneNumber,
+      getEmail,
+      getObservation,
+    };
   },
 });
 </script>

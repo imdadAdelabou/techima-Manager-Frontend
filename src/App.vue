@@ -29,7 +29,9 @@ export default defineComponent({
       console.log("On App");
       isLoading.value = true;
 
-      if (localStorage.getItem("userToken") == null) {
+      const userToken = localStorage.getItem("userToken");
+
+      if (!userToken) {
         isLoading.value = false;
         router.push("/");
         return;

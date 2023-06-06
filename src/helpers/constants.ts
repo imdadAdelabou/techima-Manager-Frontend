@@ -19,7 +19,7 @@ export const messages = {
   serverError: "Une erreur est subvenue",
 };
 
-export const BASE_API_URL = "https://techima-manager.fly.dev/api";
+export const BASE_API_URL = "http://localhost:3000/api";
 // import.meta.env.VUE_APP_MODE == "DEV"
 // ? "http://localhost:3000/api"
 // : "https://techima-manager.fly.dev/api";
