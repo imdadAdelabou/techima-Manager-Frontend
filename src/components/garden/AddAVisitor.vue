@@ -20,6 +20,7 @@
     @getInputValue="getPhoneNumber"
   >
   </BaseInput>
+
   <BaseInput
     place-holder="Email"
     class="mt-4"
@@ -34,9 +35,9 @@
   <div class="mt-6 flex">
     <CustomButton
       :btn="btnAdd"
-      :is-active="true"
+      :disabled="!isFormValid"
+      :isActive="isFormValid"
       class="w-full"
-      @click="onSubmit()"
       :is-loading="state.submitIsLoading"
     >
     </CustomButton>
@@ -46,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, computed } from "vue";
 import { ContentBtn, StatItem } from "../../helpers/types";
 import BaseInput from "../BaseInput.vue";
 import CustomButton from "../CustomButton.vue";
@@ -79,6 +80,10 @@ export default defineComponent({
       onClick: () => emit("cancel"),
     };
 
+    const isValidFirstName = computed(() => state.form.firstName.length > 0);
+    const isValidLastName = computed(() => state.form.lastName.length > 0);
+    const isFormValid = computed(() => isValidFirstName.value && isValidLastName.value);
+
     async function onSubmit() {
       // state.submitIsLoading = true;
       // const result: boolean = await visitorStore.addVisitor({
@@ -94,13 +99,16 @@ export default defineComponent({
       //   emit("clickOnSubmit", true);
       // }
       // console.log(state.firstName);
+      console.log(isFormValid.value);
     }
 
     function getFirstNameValue(value: string) {
+      console.log(value.length);
       state.form.firstName = value;
     }
 
     function getLastNameValue(value: string) {
+      console.log(value.length);
       state.form.lastName = value;
     }
 
@@ -126,6 +134,9 @@ export default defineComponent({
       getPhoneNumber,
       getEmail,
       getObservation,
+      isValidFirstName,
+      isValidLastName,
+      isFormValid,
     };
   },
 });

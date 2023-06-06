@@ -4,9 +4,12 @@
       @click="btn.onClick"
       class="w-full font-bold rounded-lg"
       :class="[
-        isActive ? 'bg-primary white' : 'border border-[#8F381A]',
+        isActive
+          ? 'bg-primary white'
+          : disabled
+          ? 'bg-[#808080] white'
+          : 'border border-[#8F381A]',
         customHeight,
-        disabled ? 'gray' : '',
       ]"
       :disabled="disabled"
     >
